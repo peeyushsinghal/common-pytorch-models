@@ -3,21 +3,21 @@ import torch.nn as nn
 from tqdm import tqdm # for beautiful model training updates
 
 
-def trainer(model,device, trainloader, testloader, optimizer,epochs,criterion):
+def trainer(model,device, trainloader, testloader, optimizer,epochs,criterion,scheduler):
   train_losses = [] # to capture train losses over training epochs
   train_accuracy = [] # to capture train accuracy over training epochs
   test_losses = [] # to capture test losses 
   test_accuracy = [] # to capture test accuracy 
   for epoch in range(epochs):
     print("EPOCH:", epoch+1)
-    train(model, device, trainloader, optimizer, epoch,criterion,train_accuracy,train_losses ) # Training Function
+    train(model, device, trainloader, optimizer, epoch,criterion,scheduler,train_accuracy,train_losses ) # Training Function
     test(model, device, testloader,criterion,test_accuracy,test_losses)   # Test Function
 
   return train_accuracy, train_losses, test_accuracy, test_losses
 
 
 # # Training Function
-def train(model, device, train_loader, optimizer, epoch,criterion,train_accuracy,train_losses):
+def train(model, device, train_loader, optimizer, epoch,criterion,scheduler,train_accuracy,train_losses):
   model.train() # setting the model in training 
   pbar = tqdm(train_loader) # putting the iterator in pbar
   correct = 0 # for accuracy numerator
@@ -36,6 +36,8 @@ def train(model, device, train_loader, optimizer, epoch,criterion,train_accuracy
 
     loss.backward() # backpropagation
     optimizer.step() # updating the params
+    
+    # scheduler.step(loss)
 
     preds = y_preds.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
     correct += preds.eq(labels.view_as(preds)).sum().item()
