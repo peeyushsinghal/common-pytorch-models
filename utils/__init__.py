@@ -1,1 +1,1 @@
-from .helper import get_default_device, model_summary, seed_everything
+from .helper import get_device, model_summary, seed_all
