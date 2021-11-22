@@ -51,7 +51,7 @@ class ResNet(nn.Module):
         self.layer1 = self._make_layer(block, 64, num_blocks[0], norm_type, stride=1)
         self.layer2 = self._make_layer(block, 128, num_blocks[1], norm_type, stride=2)
         self.layer3 = self._make_layer(block, 256, num_blocks[2], norm_type, stride=2)
-        self.layer4 = self._make_layer(block, 512, num_blocks[3], norm_type, stride=2)
+        self.layer4 = self._make_layer(block, 512, num_blocks[3], norm_type, stride=1)
         self.linear = nn.Linear(512 * block.expansion, num_classes)
 
     def _make_layer(self, block, planes, num_blocks, norm_type, stride):
@@ -78,14 +78,14 @@ class ResNet(nn.Module):
 
 
 def ResNet18(norm_type="BN"):
-  """
-  ResNet18 Model.
-  """
-  return ResNet(BasicBlock, [2, 2, 2, 2], norm_type,num_classes=200)
+    """
+    ResNet18 Model.
+    """
+    return ResNet(BasicBlock, [2, 2, 2, 2], norm_type)
 
 
 def ResNet34(norm_type="BN"):
-  '''
-  ResNet34 Model
-  '''
-  return ResNet(BasicBlock, [3, 4, 6, 3], norm_type)
+    """
+    ResNet34 Model.
+    """
+    return ResNet(BasicBlock, [3, 4, 6, 3], norm_type)
