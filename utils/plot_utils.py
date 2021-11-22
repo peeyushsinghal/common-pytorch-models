@@ -65,7 +65,7 @@ def plot_metrics(train_accuracy, train_losses, test_accuracy, test_losses):
     
     plt.show()
 
-def misclassified_images(model, test_loader, device, class_names=None, n_images=20):
+def misclassified_images(model, test_loader, device, mean, std, class_names=None, n_images=20):
     """
     Get misclassified images.
     """
@@ -87,12 +87,12 @@ def misclassified_images(model, test_loader, device, class_names=None, n_images=
             wrong_predictions = list(zip(torch.cat(wrong_images), torch.cat(wrong_label), torch.cat(correct_label)))
         print(f"Total wrong predictions are {len(wrong_predictions)}")
 
-        plot_misclassified_images(wrong_predictions, class_names=class_names, n_images=n_images)
+        plot_misclassified_images(wrong_predictions, mean, std, n_images=n_images class_names=class_names)
 
     return wrong_predictions
 
 
-def plot_misclassified_images(wrong_predictions, mean, std , n_images=20, class_names=None):
+def plot_misclassified_images(wrong_predictions, mean, std, n_images=20, class_names=None):
     """
     Plot the misclassified images.
     """
@@ -112,3 +112,21 @@ def plot_misclassified_images(wrong_predictions, mean, std , n_images=20, class_
         ax.imshow(img)
 
     plt.show()
+
+def show_predicted_actual(model, device, dataset_loader, label_names,num_images=10):
+	'''
+	shows a batch of predicted and actual images (default=10 )
+	'''
+	images, targets = next(iter(dataset_loader))
+	images = images.to(device)
+	outputs = model(images)
+	_, predicted = torch.max(outputs, 1)
+
+	plt.figure(figsize=(16, 12))
+	for i in range(num_images):
+		ax = plt.subplot(int(num_images//5)+1, 5, i + 1)
+		ax.imshow(images[i].cpu().permute(1, 2, 0))
+		ax.set_title(f"\nactual : {label_names[targets[i]]}\npredicted : {label_names[predicted[i]]}", fontsize=10)
+
+		# plt.title("actual:"+label_names[targets[i]])
+		plt.axis("off")
