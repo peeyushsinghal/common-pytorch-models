@@ -81,7 +81,7 @@ def ResNet18(norm_type="BN"):
   """
   ResNet18 Model.
   """
-  return ResNet(BasicBlock, [2, 2, 2, 2], norm_type)
+  return ResNet(BasicBlock, [2, 2, 2, 2], norm_type,num_classes=200)
 
 
 def ResNet34(norm_type="BN"):
