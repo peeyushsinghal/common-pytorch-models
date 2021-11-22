@@ -72,15 +72,14 @@ class ResNet(nn.Module):
 
 
 def ResNet18():
-'''
-ResNet18 Model
-'''
-    return ResNet(BasicBlock, [2, 2, 2, 2])
+  '''
+  ResNet18 Model
+  '''
+  return ResNet(BasicBlock, [2, 2, 2, 2])
 
 
 def ResNet34():
-'''
-ResNet34 Model
-'''
-    return ResNet(BasicBlock, [3, 4, 6, 3])
-
+  '''
+  ResNet34 Model
+  '''
+  return ResNet(BasicBlock, [3, 4, 6, 3])
