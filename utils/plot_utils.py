@@ -87,7 +87,7 @@ def misclassified_images(model, test_loader, device, mean, std, class_names=None
             wrong_predictions = list(zip(torch.cat(wrong_images), torch.cat(wrong_label), torch.cat(correct_label)))
         print(f"Total wrong predictions are {len(wrong_predictions)}")
 
-        plot_misclassified_images(wrong_predictions, mean, std, n_images=n_images class_names=class_names)
+        plot_misclassified_images(wrong_predictions, mean, std, n_images=n_images, class_names=class_names)
 
     return wrong_predictions
 
