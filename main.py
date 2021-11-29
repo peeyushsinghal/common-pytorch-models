@@ -10,14 +10,14 @@ def trainer(model,device, trainloader, testloader, optimizer,epochs,criterion,sc
   test_accuracy = [] # to capture test accuracy 
   for epoch in range(epochs):
     print("EPOCH:", epoch+1)
-    train(model, device, trainloader, optimizer, epoch,criterion,scheduler,train_accuracy,train_losses ) # Training Function
+    train(model, device, trainloader, optimizer, epoch,criterion,train_accuracy,train_losses,scheduler) # Training Function
     test(model, device, testloader,criterion,test_accuracy,test_losses)   # Test Function
 
   return train_accuracy, train_losses, test_accuracy, test_losses
 
 
 # # Training Function
-def train(model, device, train_loader, optimizer, epoch,criterion,scheduler,train_accuracy,train_losses):
+def train(model, device, train_loader, optimizer, epoch,criterion,train_accuracy,train_losses,scheduler = None):
   model.train() # setting the model in training 
   pbar = tqdm(train_loader) # putting the iterator in pbar
   correct = 0 # for accuracy numerator
@@ -37,7 +37,8 @@ def train(model, device, train_loader, optimizer, epoch,criterion,scheduler,trai
     loss.backward() # backpropagation
     optimizer.step() # updating the params
     
-    # scheduler.step(loss)
+    if scheduler:
+      scheduler.step(loss)
 
     preds = y_preds.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
     correct += preds.eq(labels.view_as(preds)).sum().item()
