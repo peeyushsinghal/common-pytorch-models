@@ -38,7 +38,7 @@ def train(model, device, train_loader, optimizer, epoch,criterion,train_accuracy
     optimizer.step() # updating the params
     
     if scheduler:
-      scheduler.step(loss)
+      scheduler.step()
 
     preds = y_preds.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
     correct += preds.eq(labels.view_as(preds)).sum().item()
