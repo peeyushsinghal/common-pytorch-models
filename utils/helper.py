@@ -36,7 +36,11 @@ def get_mean_std_dev(dataset_name):
   get mean and std deviation of dataset
   reference : https://stackoverflow.com/questions/66678052/how-to-calculate-the-mean-and-the-std-of-cifar10-data
   '''
-  if dataset_name == "CIFAR10" :
+
+  if dataset_name.str.lower() == "tinyimagenet":
+      return ((0.4802, 0.4481, 0.3975), (0.2302, 0.2265, 0.2262))
+
+  if dataset_name == "CIFAR10":
     dataset = datasets.CIFAR10(
       root = './',# directory where data needs to be stored
       train = True, # get the training portion of the dataset
