@@ -27,11 +27,11 @@ def apply_transforms_resnet(mean,std_dev):
                     A.PadIfNeeded(min_height=40, min_width=40, always_apply=True),
                     A.RandomCrop(width=32, height=32, p=1),# Random Crop
                 ],
-                p=0.5,
+                p=1.0,
             ),
 
-        A.HorizontalFlip(p=0.2),
-        A.Rotate(limit=5, p=0.2),# Rotate
+        # A.HorizontalFlip(p=0.2),
+        # A.Rotate(limit=5, p=0.2),# Rotate
 
         # A.ShiftScaleRotate(shift_limit=0.1, scale_limit=0.1, rotate_limit=10, p=0.2),
         A.CoarseDropout(
